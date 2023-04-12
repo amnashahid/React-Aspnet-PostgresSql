@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { AppBar, Box, Button, Card, CardActions, CardContent, Grid, Modal, TextField, Toolbar, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import Note from './components/Note';
 
 function App()
 {
@@ -162,7 +163,7 @@ function App()
             Enter Note Details
           </Typography>
           <TextField value={selTxt} placeholder='Title' fullWidth style={{ padding: 5 }} onChange={e => setSelTxt(e.target.value)}></TextField>
-          <TextField value={selDesc} placeholder='Description' fullWidth style={{ padding: 5 }} onChange={e => setSelDesc(e.target.value)} ></TextField>
+          <TextField rows={4} multiline value={selDesc} placeholder='Description' fullWidth style={{ padding: 5 }} onChange={e => setSelDesc(e.target.value)} ></TextField>
           <Button variant='contained' onClick={save}>Save</Button>
           <Button variant='contained' onClick={() => setOpen(false)}>Close</Button>
         </Box>
@@ -189,21 +190,8 @@ function App()
       <Grid container lg={12} style={{ padding: 30, }} >
         {
           filteredList?.length > 0 ? filteredList?.map(note =>
-            <Grid item lg={2} style={{ padding: 30, }} >
-              <Card sx={{ maxWidth: 345 }}>
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {note.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {note.desc}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button onClick={() => { edit(note.id, note.title, note.desc) }}>Edit</Button>
-                  <Button onClick={() => { deleteNote(note.id) }}>Delete</Button>
-                </CardActions>
-              </Card>
+            <Grid item lg={12 / 5} style={{ padding: 10 }} >
+              <Note note={note} edit={edit} deleteNote={deleteNote}></Note>
             </Grid>
           ) : 'No notes are added. Please click take a note button to add a note'
         }
